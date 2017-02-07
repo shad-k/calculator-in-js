@@ -1,10 +1,13 @@
 var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
-	cleanCSS = require('gulp-clean-css');
+	cleanCSS = require('gulp-clean-css'),
+	jshint = require('gulp-jshint');
 
 gulp.task('scripts', function() {
 	gulp.src('js/*.js')
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
 		.pipe(uglify())
 		.pipe(rename('calc.min.js'))
 		.pipe(gulp.dest('js/'));
@@ -17,4 +20,9 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest('css/'));
 });
 
-gulp.task('default', ['scripts', 'styles']);
+gulp.task('watch', function() {
+	gulp.watch('js/*.js', ['scripts']);
+	gulp.watch('css/*.css', ['styles']);
+});
+
+gulp.task('default', ['scripts', 'styles', 'watch']);
