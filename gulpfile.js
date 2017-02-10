@@ -2,7 +2,8 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	cleanCSS = require('gulp-clean-css'),
-	jshint = require('gulp-jshint');
+	jshint = require('gulp-jshint'),
+	livereload = require('gulp-livereload');
 
 gulp.task('scripts', function() {
 	gulp.src('js/*.js')
@@ -21,6 +22,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('watch', function() {
+	livereload.reload();
 	gulp.watch('js/*.js', ['scripts']);
 	gulp.watch('css/*.css', ['styles']);
 });
