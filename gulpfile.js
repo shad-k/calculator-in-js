@@ -2,11 +2,10 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	cleanCSS = require('gulp-clean-css'),
-	jshint = require('gulp-jshint'),
-	livereload = require('gulp-livereload');
+	jshint = require('gulp-jshint');
 
 gulp.task('scripts', function() {
-	gulp.src('js/*.js')
+	gulp.src(['js/*.js', '!js/*.min.js'])
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
 		.pipe(uglify())
@@ -15,14 +14,13 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('styles', function() {
-	gulp.src('css/*.css')
+	gulp.src(['css/*.css', '!css/*.min.css'])
 		.pipe(cleanCSS())
 		.pipe(rename('style.min.css'))
 		.pipe(gulp.dest('css/'));
 });
 
 gulp.task('watch', function() {
-	livereload.reload();
 	gulp.watch('js/*.js', ['scripts']);
 	gulp.watch('css/*.css', ['styles']);
 });
